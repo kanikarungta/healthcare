@@ -5,17 +5,6 @@ import Doctor from './doctor.jsx'
 import { credentials } from '../shared/credentials'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
-// function PrivateRoute ({component: Component, ...rest}) {
-//     console.log('are you even working')
-//     return (
-//         <Route
-//         {...rest}
-//         render={(props) => <Component {...props} />}      
-//       />
-      
-//     )
-//   }
-
 class Login extends Component {
     constructor (props) {
         super (props)
@@ -29,14 +18,16 @@ class Login extends Component {
         }
     }
 
-    handleClick = () => {
+    handleLogin = () => {
         let loggedInUserDetails = credentials.filter(eachUser=>eachUser.email===this.state.email && eachUser.password===this.state.password)
         console.log(loggedInUserDetails)
         if (loggedInUserDetails.length === 0 ) {
             this.setState({errorMsg:'Please enter valid credentials', email: '', password: '', isAuth: false})
         }
         else {
+            localStorage.setItem('designation' , loggedInUserDetails[0]['designation'])
             this.setState({ isAuth: true, designation: loggedInUserDetails[0]['designation']})
+            // this.props.handleAuthState(true, loggedInUserDetails[0]['designation'])
         }
     }
 
@@ -49,7 +40,6 @@ class Login extends Component {
     }
 
     render () {
-        // console.log(this.state)
         return (
             <div>  
                 <div className='container-fluid'>
@@ -80,11 +70,10 @@ class Login extends Component {
                                             placeholder="password"
                                         />
                                     </FormGroup>
-                                    <Button className='submit-button' onClick={()=> this.handleClick()}>Submit</Button>
+                                    <Button className='submit-button' onClick={()=> this.handleLogin()}>Submit</Button>
                                     <div className='text-danger mt-3'>{this.state.errorMsg}</div>
                                 </fieldset>
                             </Form>
-                            {/* {this.state.isAuth ? <PrivateRoute path='/doctor' component={Doctor} />: '' } */}
                             {this.state.isAuth ? <Redirect to={'/'+this.state.designation} /> : ''}
                         </div>
                     </div>
