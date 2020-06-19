@@ -1,8 +1,20 @@
 import React, { Component } from 'react'
-import NavBar from './navbar'
 import autoBind from 'react-autobind'
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
+import Doctor from './doctor.jsx'
 import { credentials } from '../shared/credentials'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
+
+// function PrivateRoute ({component: Component, ...rest}) {
+//     console.log('are you even working')
+//     return (
+//         <Route
+//         {...rest}
+//         render={(props) => <Component {...props} />}      
+//       />
+      
+//     )
+//   }
 
 class Login extends Component {
     constructor (props) {
@@ -11,7 +23,9 @@ class Login extends Component {
         this.state= {
             errorMsg: null,
             email: '',
-            password: ''
+            password: '',
+            isAuth: false,
+            designation: ''
         }
     }
 
@@ -19,15 +33,15 @@ class Login extends Component {
         let loggedInUserDetails = credentials.filter(eachUser=>eachUser.email===this.state.email && eachUser.password===this.state.password)
         console.log(loggedInUserDetails)
         if (loggedInUserDetails.length === 0 ) {
-            this.setState({errorMsg:'Please enter valid credentials', email: '', password: ''})
+            this.setState({errorMsg:'Please enter valid credentials', email: '', password: '', isAuth: false})
         }
         else {
-            console.log('you may succeed')
+            this.setState({ isAuth: true, designation: loggedInUserDetails[0]['designation']})
         }
     }
 
     handleChange = (e) => {
-        this.setState({[e.target.name]:e.target.value})
+        this.setState({[e.target.name]:e.target.value || null})
     }
 
     shouldComponentUpdate (np, ns) {
@@ -35,10 +49,10 @@ class Login extends Component {
     }
 
     render () {
+        // console.log(this.state)
         return (
             <div>  
                 <div className='container-fluid'>
-                    <NavBar />
                     <div className="row justify-content-center">
                         <div className="col-10 col-sm-7 col-md-5 col-lg-4">
                         <Form >
@@ -70,6 +84,8 @@ class Login extends Component {
                                     <div className='text-danger mt-3'>{this.state.errorMsg}</div>
                                 </fieldset>
                             </Form>
+                            {/* {this.state.isAuth ? <PrivateRoute path='/doctor' component={Doctor} />: '' } */}
+                            {this.state.isAuth ? <Redirect to={'/'+this.state.designation} /> : ''}
                         </div>
                     </div>
                 </div>

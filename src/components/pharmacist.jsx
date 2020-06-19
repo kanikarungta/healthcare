@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import autoBind from 'react-autobind'
 
-class Doctor extends Component {
+class Pharmacist extends Component {
     constructor (props) {
         super (props)
         autoBind(this)
@@ -13,10 +13,10 @@ class Doctor extends Component {
     render () {
         return (
             <div>
-                Doctor page
+                Pharmacist page
             </div>
         )
     }
 }
 
-export default Doctor
+export default Pharmacist

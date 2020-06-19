@@ -1,9 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Logo from './images/logo.png'
 import './index.css';
 import App from './App';
+import {Navbar, NavbarBrand} from 'reactstrap'
 import * as serviceWorker from './serviceWorker';
+
+const NavBar = () => (
+  <Navbar dark className='navigationBar'>
+    <NavbarBrand href='/'><img src={Logo} alt="logo" width="100px"/></NavbarBrand>
+  </Navbar>
+)
 
 const Footer = () => (
   <footer className="footer footer-copyright text-center">
@@ -15,7 +23,7 @@ const Footer = () => (
 
 
 ReactDOM.render(
-  [<App key="1"/>, <Footer key="2" />],
+  [<NavBar key="1"/>,<App key="2"/>, <Footer key="3" />],
   document.getElementById('root')
 );
 
