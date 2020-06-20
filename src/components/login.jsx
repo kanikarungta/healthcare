@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import autoBind from 'react-autobind'
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
-import Doctor from './doctor.jsx'
-import { credentials } from '../shared/credentials'
+import {Redirect} from 'react-router-dom'
+// import { credentials } from '../shared/data'
+import { connect } from 'react-redux'
+import { loginDetails } from './actions'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 class Login extends Component {
@@ -13,26 +14,25 @@ class Login extends Component {
             errorMsg: null,
             email: '',
             password: '',
-            isAuth: false,
             designation: ''
         }
     }
 
     handleLogin = () => {
-        let loggedInUserDetails = credentials.filter(eachUser=>eachUser.email===this.state.email && eachUser.password===this.state.password)
-        console.log(loggedInUserDetails)
+        let loggedInUserDetails = this.props.credentials.filter(eachUser=>eachUser.email===this.state.email && eachUser.password===this.state.password)
         if (loggedInUserDetails.length === 0 ) {
-            this.setState({errorMsg:'Please enter valid credentials', email: '', password: '', isAuth: false})
+            this.setState({errorMsg:'Please enter valid credentials', email: '', password: ''})
         }
         else {
-            localStorage.setItem('designation' , loggedInUserDetails[0]['designation'])
-            this.setState({ isAuth: true, designation: loggedInUserDetails[0]['designation']})
-            // this.props.handleAuthState(true, loggedInUserDetails[0]['designation'])
+            let userDetails = loggedInUserDetails[0] 
+            localStorage.setItem('designation' , userDetails['designation'])
+            this.setState({ designation: userDetails['designation']})
+            this.props.loginDetails({...userDetails, isAuth: true})
         }
     }
 
     handleChange = (e) => {
-        this.setState({[e.target.name]:e.target.value || null})
+        this.setState({[e.target.name]:e.target.value || ''})
     }
 
     shouldComponentUpdate (np, ns) {
@@ -74,7 +74,7 @@ class Login extends Component {
                                     <div className='text-danger mt-3'>{this.state.errorMsg}</div>
                                 </fieldset>
                             </Form>
-                            {this.state.isAuth ? <Redirect to={'/'+this.state.designation} /> : ''}
+                            {this.props.isAuth ? <Redirect to={'/'+this.state.designation} /> : ''}
                         </div>
                     </div>
                 </div>
@@ -83,4 +83,17 @@ class Login extends Component {
     }
 }
 
-export default Login
+const mapStateToProps = (state) => {
+    return {
+        credentials: state.credentials,
+        isAuth: state.isAuth
+    }
+ }
+
+ const mapDispatchToProps = (dispatch) => {
+    return {
+       loginDetails: (loggedInUserDetails) => dispatch(loginDetails(loggedInUserDetails))
+    }
+ }
+
+ export default connect(mapStateToProps, mapDispatchToProps)(Login)
