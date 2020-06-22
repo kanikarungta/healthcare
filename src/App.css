@@ -33,7 +33,8 @@
 }
 
 .patientData {
-  padding: 2%;
+  height: 83vh;
+  overflow: scroll;
 }
 
 .patientTitle {
@@ -61,4 +62,14 @@
   text-decoration: underline;
   text-decoration-color: red;
   text-underline-position: under;
+}
+
+.doctorTitle {
+  font-size: x-large;
+  font-weight: bold;
+  color: wheat;
+}
+
+.MuiTableCell-root  {
+  padding: 9.95px !important;
 }

@@ -19,7 +19,7 @@ function ProtectedRoute (props) {
 
 const mapStateToProps = (state) => {
     return {
-       designation: state.designation, isAuth: state.isAuth
+       designation: state.designation, isAuth: state.isAuth, patient_details: state.patient_details
     }
  }
 

@@ -10,3 +10,10 @@ export function logout() {
         type: 'LOGOUT'
     }
 }
+
+export function savePatientDetails(data) {
+    return {
+        type: 'SAVEPATIENTDETAILS',
+        data: data
+    }
+}
