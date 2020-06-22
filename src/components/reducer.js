@@ -3,7 +3,7 @@ const initialState = {
         {c_id:1, email:'doctor', password:'doctor', designation:'Doctor'},
         {c_id:7, email:'Arun', password:'doctor', designation:'Doctor'},
         {c_id:2, email:'patient', password:'patient', designation:'Patient'},
-        {c_id:3, email:'pharmacist', password:'pharmacist', designation:'Pharmacist'},
+        {c_id:3, email:'Pharmacist', password:'pharmacist', designation:'Pharmacist'},
         {c_id:4, email:'bobby', password:'bobby', designation:'Patient'},
         {c_id:5, email:'charu', password:'charu', designation:'Patient'},
         {c_id:6, email:'dhanvi', password:'dhanvi', designation:'Patient'},

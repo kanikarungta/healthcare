@@ -41,6 +41,7 @@ class Doctor extends Component {
                                     resolve()
                                     this.setState((prevState) => {
                                         const data = [...prevState.data]
+                                        newData.prescription=[]
                                         data.push(newData)
                                         return { ...prevState, data }
                                     })
