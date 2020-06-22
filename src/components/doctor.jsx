@@ -3,30 +3,13 @@ import autoBind from 'react-autobind'
 import { connect } from 'react-redux'
 import { logout, savePatientDetails  } from './actions'
 import User_profile from './../images/user_profile.png'
-
-import MaterialTable from 'material-table';
+import MaterialTable from 'material-table'
 
 class Doctor extends Component {
     constructor (props) {
         super (props)
         autoBind(this)
         this.state= {
-            email: this.props.email,
-            columns: [
-                { title: 'ID', field: 'p_id', type: 'numeric' },
-                { title: 'Name', field: 'name' },
-                { title: 'Email', field: 'email' },
-                { title: 'Age', field: 'age', type: 'numeric' },
-                { title: 'Gender', field: 'gender', lookup: { 'm': 'Male', 'f': 'Female', 'o': 'Others' }, },
-                { title: 'Nationality', field: 'nationality', lookup: { 'indian': 'Indian', 'german': 'German', 'italian': 'Italian', 'french': 'French' }},
-                { title: 'Next Visit', field: 'nextVisit', type: 'datetime' },
-                { title: 'Ailments', field: 'ailments'}
-            ],
-            prescriptionColumns: [
-                { title: 'Medicine', field: 'medicine' },
-                { title: 'Days', field: 'days', type: 'numeric' },
-                { title: 'PerDay', field: 'perDay', type: 'numeric' },
-            ],
             data: props.patientDetails
         }
     }
@@ -41,7 +24,7 @@ class Doctor extends Component {
                     <section className='col-sm-2 leftNav'>
                         <div style={{textAlign:'center'}}>
                             <img src={User_profile} alt='user_profile' className='user_photo'/>
-                            <div className='doctorTitle'>Dr. {this.state.email}</div>
+                            <div className='doctorTitle'>Dr. {this.props.email}</div>
                         </div>
                         
                         <button type="button" className="btn btn-primary logout_patient" onClick={()=>this.logout()}>Logout</button>
@@ -49,50 +32,50 @@ class Doctor extends Component {
                     <article className='patientData col-sm-10'>
                         <MaterialTable
                             title="Patients Record"
-                            columns={this.state.columns}
+                            columns={this.props.columns}
                             data={this.state.data}
                             editable={{
                                 onRowAdd: (newData) =>
                                 new Promise((resolve) => {
                                     setTimeout(() => {
-                                    resolve();
+                                    resolve()
                                     this.setState((prevState) => {
-                                        const data = [...prevState.data];
-                                        data.push(newData);
-                                        return { ...prevState, data };
-                                    });
-                                    }, 600);
+                                        const data = [...prevState.data]
+                                        data.push(newData)
+                                        return { ...prevState, data }
+                                    })
+                                    }, 600)
                                 }),
                                 onRowUpdate: (newData, oldData) =>
                                 new Promise((resolve) => {
                                     setTimeout(() => {
-                                    resolve();
+                                    resolve()
                                     if (oldData) {
                                         this.setState((prevState) => {
-                                        const data = [...prevState.data];
-                                        data[data.indexOf(oldData)] = newData;
-                                        return { ...prevState, data };
-                                        });
+                                        const data = [...prevState.data]
+                                        data[data.indexOf(oldData)] = newData
+                                        return { ...prevState, data }
+                                        })
                                     }
-                                    }, 600);
+                                    }, 600)
                                 }),
                                 onRowDelete: (oldData) =>
                                 new Promise((resolve) => {
                                     setTimeout(() => {
-                                    resolve();
+                                    resolve()
                                     this.setState((prevState) => {
-                                        const data = [...prevState.data];
-                                        data.splice(data.indexOf(oldData), 1);
-                                        return { ...prevState, data };
-                                    });
-                                    }, 600);
+                                        const data = [...prevState.data]
+                                        data.splice(data.indexOf(oldData), 1)
+                                        return { ...prevState, data }
+                                    })
+                                    }, 600)
                                 }),
                             }}
                             detailPanel={(rowData) => {
                                 return (
                                     <MaterialTable
                                         title='Prescription'
-                                        columns={this.state.prescriptionColumns}
+                                        columns={this.props.prescriptionColumns}
                                         data={rowData.prescription}
                                         options={{
                                             paging: false,
@@ -102,15 +85,15 @@ class Doctor extends Component {
                                             onRowAdd: (newData) =>
                                             new Promise((resolve) => {
                                                 setTimeout(() => {
-                                                resolve();
+                                                resolve()
                                                 this.setState((prevState) => {
-                                                    const data = [...prevState.data];
+                                                    const data = [...prevState.data]
                                                     const data2 = data[rowData.tableData.id].prescription
-                                                    data2.push(newData);
+                                                    data2.push(newData)
                                                     data[rowData.tableData.id].prescription = data2
-                                                    return { ...prevState, data: {...data} };
-                                                });
-                                                }, 600);
+                                                    return { ...prevState, data }
+                                                })
+                                                }, 600)
                                             }),
                                             onRowUpdate: (newData, oldData) =>
                                             new Promise((resolve) => { 
@@ -122,21 +105,21 @@ class Doctor extends Component {
                                                         data2[data2.indexOf(oldData)] = newData
                                                         data[rowData.tableData.id].prescription = data2
                                                         return { ...prevState, data }
-                                                    });
+                                                    })
                                                 }
                                                 }),
                                             onRowDelete: (oldData) =>
                                             new Promise((resolve) => {
                                                 setTimeout(() => {
-                                                resolve();
+                                                resolve()
                                                 this.setState((prevState) => {
-                                                    const data = [...prevState.data];
+                                                    const data = [...prevState.data]
                                                     const data2 = data[rowData.tableData.id].prescription
-                                                    data2.splice(data2.indexOf(oldData), 1);
+                                                    data2.splice(data2.indexOf(oldData), 1)
                                                     data[rowData.tableData.id].prescription = data2
-                                                    return { ...prevState, data };
-                                                });
-                                                }, 600);
+                                                    return { ...prevState, data }
+                                                })
+                                                }, 600)
                                             }),
                                         }}
                                     />
@@ -153,7 +136,9 @@ class Doctor extends Component {
 const mapStateToProps = (state) => {
     return {
         email: state.email,
-        patientDetails: state.patientDetails
+        patientDetails: state.patientDetails,
+        columns: state.columns,
+        prescriptionColumns: state.prescriptionColumns
     }
  }
 
