@@ -22,7 +22,7 @@ class Pharmacist extends Component {
                     <section className='col-sm-2 leftNav'>
                         <div style={{textAlign:'center'}}>
                             <img src={User_profile} alt='user_profile' className='user_photo'/>
-                            <div className='doctorTitle'>Hi {this.props.email}</div>
+                            <div className='doctorTitle'>Hi {this.props.name}</div>
                         </div>
                         
                         <button type="button" className="btn btn-primary logout_patient" onClick={()=>this.props.logout()}>Logout</button>
@@ -48,6 +48,7 @@ class Pharmacist extends Component {
 const mapStateToProps = (state) => {
     return {
         email: state.email,
+        name: state.name,
         patientDetails: state.patientDetails,
         columns: state.pharmacistColumns,
         prescriptionColumns: state.prescriptionColumns,

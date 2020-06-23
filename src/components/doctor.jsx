@@ -24,7 +24,7 @@ class Doctor extends Component {
                     <section className='col-sm-2 leftNav'>
                         <div style={{textAlign:'center'}}>
                             <img src={User_profile} alt='user_profile' className='user_photo'/>
-                            <div className='doctorTitle'>Dr. {this.props.email}</div>
+                            <div className='doctorTitle'>Dr. {this.props.name}</div>
                         </div>
                         
                         <button type="button" className="btn btn-primary logout_patient" onClick={()=>this.logout()}>Logout</button>
@@ -137,6 +137,7 @@ class Doctor extends Component {
 const mapStateToProps = (state) => {
     return {
         email: state.email,
+        name: state.name,
         patientDetails: state.patientDetails,
         columns: state.columns,
         prescriptionColumns: state.prescriptionColumns

@@ -14,7 +14,8 @@ class Login extends Component {
             errorMsg: null,
             email: '',
             password: '',
-            designation: ''
+            designation: '',
+            validEmail: false
         }
     }
 
@@ -33,6 +34,15 @@ class Login extends Component {
 
     handleChange = (e) => {
         this.setState({[e.target.name]:e.target.value || ''})
+    }
+
+    validateEmail () {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
+            this.setState({validEmail: true,  errorMsg:''})
+        }
+        else {
+            this.setState({validEmail: false,  errorMsg:'Please enter valid email'})
+        }   
     }
 
     shouldComponentUpdate (np, ns) {
@@ -55,6 +65,7 @@ class Login extends Component {
                                             name="email"
                                             id="email"
                                             onChange={(e)=>{this.handleChange(e)}}
+                                            onBlur={()=>this.validateEmail()}
                                             value={this.state.email}
                                             placeholder="kanika.rungta@3ds.com"
                                         />
@@ -70,7 +81,7 @@ class Login extends Component {
                                             placeholder="password"
                                         />
                                     </FormGroup>
-                                    <Button className='submit-button' onClick={()=> this.handleLogin()}>Submit</Button>
+                                    <Button className='submit-button' disabled={!this.state.validEmail} onClick={()=> this.handleLogin()}>Submit</Button>
                                     <div className='text-danger mt-3'>{this.state.errorMsg}</div>
                                 </fieldset>
                             </Form>

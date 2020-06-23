@@ -1,12 +1,12 @@
 const initialState = {
     'credentials': [
-        {c_id:1, email:'doctor', password:'doctor', designation:'Doctor'},
-        {c_id:7, email:'Arun', password:'doctor', designation:'Doctor'},
-        {c_id:2, email:'patient', password:'patient', designation:'Patient'},
-        {c_id:3, email:'Pharmacist', password:'pharmacist', designation:'Pharmacist'},
-        {c_id:4, email:'bobby', password:'bobby', designation:'Patient'},
-        {c_id:5, email:'charu', password:'charu', designation:'Patient'},
-        {c_id:6, email:'dhanvi', password:'dhanvi', designation:'Patient'},
+        {c_id:1, email:'doctor@mdsol.com', name: 'Doctor', password:'doctor', designation:'Doctor'},
+        {c_id:7, email:'arun@mdsol.com', name: 'Arun', password:'doctor', designation:'Doctor'},
+        {c_id:2, email:'patient@mdsol.com', name: 'Yam', password:'patient', designation:'Patient'},
+        {c_id:3, email:'pharmacist@mdsol.com', name: 'Dal', password:'pharmacist', designation:'Pharmacist'},
+        {c_id:4, email:'bobby@mdsol.com', name: 'Bobby', password:'bobby', designation:'Patient'},
+        {c_id:5, email:'charu@mdsol.com', name: 'Charu', password:'charu', designation:'Patient'},
+        {c_id:6, email:'dhanvi@mdsol.com', name: 'Dhanvi', password:'dhanvi', designation:'Patient'},
         ],
     
     'patientDetails': [
@@ -44,6 +44,7 @@ const initialState = {
     costOfMedicines: {'Amoxicillin': 8.25, 'Azithromycin': 7, 'Cephalexin': 15, 'Ibuprofen': 3, 'Ciprofloxacin': 50, 'Paracetamol': 1},
     isAuth: false,
     email: '',
+    name: '',
     designation: '',
     c_id: null,
     patient_details : null
@@ -59,7 +60,7 @@ const reducer = (state = initialState, action) => {
                 })
             }
             patient_details = patient_details && patient_details.length && patient_details[0]
-            return {...state, email:action.email, designation:action.designation, c_id:action.c_id, patient_details, isAuth: action.isAuth}
+            return {...state, email:action.email, designation:action.designation, c_id:action.c_id, patient_details, isAuth: action.isAuth, name: action.name}
         }
 
         case 'LOGOUT' : {
